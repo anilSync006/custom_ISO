@@ -68,10 +68,10 @@ def Packaging_kickstart_file_into_ISO():
     os.system("sudo rm -rf iso_mount/ iso_rsync/")
 
 def Main():
-    # Download_ISO()
-    #Create_mount_and_sync_folder()
+    Download_ISO()
+    Create_mount_and_sync_folder()
     CreateCentOS_KS()
-    #Packaging_kickstart_file_into_ISO()
+    Packaging_kickstart_file_into_ISO()
 
 if __name__=="__main__":
     Main()
