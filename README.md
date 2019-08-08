@@ -3,17 +3,16 @@
 Configuring Kickstart file:
 -------
 
-Add or edit YAML file to configure kickstart file.
+- Add or edit YAML file to configure kickstart file.
 
-Configurable Attributes
-
-1.keyboard
-2.language
-3.root_password
-4.timezone
-5.users
-6.size
-7.packages
+- Configurable Attributes
+1. keyboard
+2. language
+3. root_password
+4. timezone
+5. users
+6. size
+7. packages
 
 How To Run:
 ------
@@ -24,13 +23,12 @@ How To Run:
 - pask new ISO with checksum
 
 >Dependencies:
------
-python3
-rsync
-mount
-genisoimage
-isomd5sum
-crypt
-jinja2
-yaml
-sed
+- python3
+- rsync
+- mount
+- genisoimage
+- isomd5sum
+- crypt
+- jinja2
+- yaml
+- sed
