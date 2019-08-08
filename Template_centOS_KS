@@ -1,0 +1,70 @@
+#version=DEVEL
+# System authorization information
+auth --useshadow --passalgo=sha512
+
+# Use CDROM installation media
+cdrom
+
+# Use graphical install
+graphical
+
+# Run the Setup Agent on first boot
+firstboot --enable
+ignoredisk --only-use=sda
+
+# Keyboard layouts
+keyboard --vckeymap={{ keyboard }}
+
+# System language
+lang {{ language }}
+
+# Network information
+network  --bootproto=dhcp --device=ens33 --ipv6=auto --activate
+network  --hostname=localhost.localdomain
+
+# Root password
+rootpw --iscrypted {{ root_password }}
+
+# Setting up firewall and enabling SSH for remote management
+firewall --enabled --service=ssh
+
+# System services
+services --disabled="chronyd"
+
+# System timezone
+timezone {{ timezone }}
+
+# Users
+{% if users -%}
+{% for user in users -%}
+user --name={{ user.login_id }} --password={{ user.password }} --iscrypted --gecos="{{ user.name }}"
+{% endfor %}
+{% endif -%}
+
+# System bootloader configuration
+bootloader --append="crashkernel=auto" --location=mbr --boot-drive=sda
+
+# Partition clearing information
+clearpart --none --initlabel
+
+# Disk partitioning information
+part /boot --fstype="xfs" --ondisk=sda --size={{ size.boot }}
+
+part pv.550 --fstype="lvmpv" --ondisk=sda --size=1 --grow
+volgroup centos --pesize={{ size.lvm }} pv.550
+logvol /  --fstype={{ fstype }} --size={{ size.root }} --name=root --vgname=centos
+logvol /usr  --fstype={{ fstype }} --size={{ size.usr }} --name=usr --vgname=centos
+logvol /var --fstype={{ fstype }} --size={{ size.var }} --name=var --vgname=centos
+logvol /home --fstype={{ fstype }} --size={{ size.home }} --name=home --vgname=centos
+logvol swap  --fstype="swap" --size={{ size.swap }} --name=swap --vgname=centos
+
+#reboot after installing
+reboot
+
+%packages
+{% for package in packages -%}
+{{ package }}
+{% endfor %}
+#@core
+#@base
+%end

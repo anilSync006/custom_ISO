@@ -1,0 +1,29 @@
+#CentOS configurations
+
+keyboard: "us"
+
+language: "en_US"
+
+root_password: "sync006"
+
+timezone: "Asia/Kolkata"
+
+users:
+  -
+    name: "Anil K"
+    login_id: anilk
+    password: "sync006"
+
+size:
+  boot: 1024
+  lvm: 4096
+  root: 1024
+  usr: 3072
+  var: 5120
+  home: 512
+  swap: 1024
+
+packages:
+  - yum
+  - python
+  - curl
